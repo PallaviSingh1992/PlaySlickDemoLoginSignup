@@ -1,0 +1,55 @@
+
+@(userForm:Form[UserFormData],users:Seq[User])(implicit request:RequestHeader,messages:Messages)
+
+@main(){
+
+<div>
+
+ <div class="container">
+  <div class="panel panel-primary">
+   <div class="panel-heading">User Details: </div>
+   <div class="panel-body">
+
+    <div>
+     <h3>Registered User Details</h3>
+     <table class="table table-striped">
+      <thead>
+      <tr>
+       <th>ID</th>
+       <th>User Name</th>
+       <th>Email</th>
+       <th>Password</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      @for(userVal<-users){
+      <tr>
+       <td>@userVal.id</td>
+       <td>@userVal.name</td>
+       <td>@userVal.email</td>
+       <td>@userVal.password</td>
+       <td><a href="@routes.HomeController.deleteUser(userVal.id)">Delete</a></td>
+      </tr>
+      }
+      </tbody>
+     </table>
+    </div>
+
+    @helper.form(action = routes.HomeController.addUser()) {
+    @helper.inputText(userForm("name"),'_label->"Name :",'class->"form-control",'value->"Click to focus...",'placeholder->"FirstName LastName")
+    @helper.inputText(userForm("email"),'_label->"Email :",'class->"form-control",'value->"Click to focus...",'placeholder->"abc@xyz.pqr")
+    @helper.inputPassword(userForm("password"),'_label->"Password :",'class->"form-control",'value->"Click to focus...")
+    @helper.inputPassword(userForm("repeatPassword"),'_label->"Repeat Password :",'class->"form-control",'value->"Click to focus...")
+    <button type="submit" class="btn btn-primary" value="SUBMIT">SUBMIT</button>
+    }
+
+   </div>
+
+  </div>
+ </div>
+
+
+</div>
+
+}
